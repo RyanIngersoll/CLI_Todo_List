@@ -16,14 +16,40 @@
 }
 
 	
-     // Should be listed [KEY] Value like this:
-     // [1] TODO item 1
-     // [2] TODO item 2 - blah
-     // DO NOT USE ECHO, USE RETURN
- 
+//     Add a (S)ort option to your menu. When it is chosen, it should call a function called sort_menu().
+// When sort menu is opened, show the following options "(A)-Z, (Z)-A, (O)rder entered, (R)everse order entered".
+// When a sort type is selected, order the TODO list accordingly and display the results.
 
- // Get STDIN, strip whitespace and newlines, 
- // and convert to uppercase if $upper is true
+function sort_menu($items){
+	echo '(A)-Z, (Z)-A, (O)rder entered, (R)everse order entered ';
+         
+         $sortOptions = get_input(TRUE);
+         var_dump($sortOptions);
+
+         if ($sortOptions == 'A') {
+         	 sort($items);
+         
+        	} 
+
+        elseif($sortOptions == 'Z') {
+         	 rsort($items);
+         
+        	} 
+         
+         elseif($sortOptions == 'O') {
+          	ksort($items);
+         
+        	} 
+
+         elseif($sortOptions == 'R') {
+         	krsort($items);
+         
+        	} 
+        	return $items;
+
+}
+
+
  function get_input($upper = FALSE) {
 
 		$items = trim(fgets(STDIN));
@@ -42,7 +68,7 @@
      echo list_items($items);
 
      // Show the menu options
-     echo '(N)ew item, (R)emove item, (Q)uit : ';
+     echo '(N)ew item, (R)emove item, (S)ort item, (Q)uit : ';
 
      // Get the input from user
      // Use trim() to remove whitespace and newlines
@@ -54,7 +80,9 @@
          echo 'Enter item: ';
          // Add entry to list array
          $items[] = get_input();
-     } elseif ($input == 'R') {
+     } 
+
+     elseif ($input == 'R') {
          // Remove which item?
          echo 'Enter item number to remove: ';
          // Get array key
@@ -64,6 +92,12 @@
          unset($items[$key-1]);
          
      }
+
+     elseif ($input == 'S') {
+     	$items = sort_menu($items);
+
+     }
+
  // Exit when input is (Q)uit
  } while ($input != 'Q');
 
