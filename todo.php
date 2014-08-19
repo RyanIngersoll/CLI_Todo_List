@@ -1,77 +1,76 @@
 <?php
 
-// Create a new directory in your vagrant-lamp
-//  directory named todo_list with a file named todo.
-//  php containing the code above. Use git init to 
-//  initialize a new local repository in that directory and commit your code. 
-//  Create a new remote repository on GitHub called CLI_Todo_List and add the
-//   remote to your local repository so you can push your code.
 
-// After each exercise item, commit and push changes 
-// to your GitHub repository.
+ $items = array();
 
-// 1. Update the code to allow upper and lowercase inputs
-//  from user for all menu items. Test adding, removing, and quitting.
+ // List array items formatted for CLI
+ function list_items($list) {
+     // Return string of list items separated by newlines.
+ 	$listString = '';
 
-// 2. Update the program to start numbering the list with 1 instead of 0.
-//  Make sure remove still works as expected.
+ 	foreach($list as $key => $value) {
+		$listString .=  '[' . ++$key . ']' . "$value" . PHP_EOL;		
+	}
 
+	return $listString;
+}
 
-echo 'Ryans TO DO list'  . PHP_EOL;
-
-// Create array to hold list of todo items
-$items = [
-    
-	];
-
-
-// The loop!
-do {
 	
+     // Should be listed [KEY] Value like this:
+     // [1] TODO item 1
+     // [2] TODO item 2 - blah
+     // DO NOT USE ECHO, USE RETURN
+ 
 
-    // Iterate through list items
-    foreach ($items as $key => $item) {
-        // Display each item and a newline
-        echo "[" . ++$key . "]" . $item . PHP_EOL;
+ // Get STDIN, strip whitespace and newlines, 
+ // and convert to uppercase if $upper is true
+ function get_input($upper = FALSE) {
 
-    }
+		$items = trim(fgets(STDIN));
 
-    // Show the menu options
-   echo '(N)ew item, (R)emove item, (Q)uit : ' . PHP_EOL;
+		if ($upper) {
+			return strtoupper($items);
+		} else { 
+			return $items;
+		}
+ 	}
+ 
 
-    // Get the input from user
-    // Use trim() to remove whitespace and newlines
-    $input = trim(fgets(STDIN));
+ // The loop!
+ do {
+     // Echo the list produced by the function
+     echo list_items($items);
 
-    // Check for actionable input
-    if ($input == 'N' || $input == 'n') {
-        // Ask for entry
-        echo 'Enter item: ';
-        // Add entry to list array
-        $items[] = trim(fgets(STDIN));
+     // Show the menu options
+     echo '(N)ew item, (R)emove item, (Q)uit : ';
 
-    } 
-    elseif ($input == 'R'|| $input == 'r') {
-        // Remove which item?
-        echo 'Enter item number to remove: ';
-        // Get array key
-        $key = trim(fgets(STDIN));
-        $key--;
-        // Remove from array
-        unset($items[$key]);
-        $items = array_values($items); //resets items
-    }
-   
+     // Get the input from user
+     // Use trim() to remove whitespace and newlines
+     $input = get_input(TRUE);
 
-    
-// Exit when input is (Q)uit
-} while ($input != 'Q' && $input != 'q');
+     // Check for actionable input
+     if ($input == 'N') {
+         // Ask for entry
+         echo 'Enter item: ';
+         // Add entry to list array
+         $items[] = get_input();
+     } elseif ($input == 'R') {
+         // Remove which item?
+         echo 'Enter item number to remove: ';
+         // Get array key
+         $key = get_input();
+         // Remove from array
+         
+         unset($items[$key-1]);
+         
+     }
+ // Exit when input is (Q)uit
+ } while ($input != 'Q');
 
-// Say Goodbye!
-echo "Goodbye!\n";
+ // Say Goodbye!
+ echo "Goodbye!\n";
 
-// Exit with 0 errors
-exit(0);
-
+ // Exit with 0 errors
+ exit(0);
 
 ?>
