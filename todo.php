@@ -5,11 +5,13 @@
 
  // List array items formatted for CLI
  function list_items($list) {
-     // Return string of list items separated by newlines.
+     
  	$listString = '';
+ 	//initialize string variable
 
  	foreach($list as $key => $value) {
-		$listString .=  '[' . ++$key . ']' . "$value" . PHP_EOL;		
+		$listString .=  '[' . ++$key . ']' . "$value" . PHP_EOL;
+		// Return string of list items separated by newlines.		
 	}
 
 	return $listString;
@@ -27,22 +29,40 @@ function sort_menu($items){
          var_dump($sortOptions);
 
          if ($sortOptions == 'A') {
-         	 sort($items);
-         
+         	 asort($items);
+         // switch (#sortOptions){
+         	//  case 'A':
+         	//  sort($items);
+         	// break;
+         	//  }
         	} 
 
         elseif($sortOptions == 'Z') {
          	 rsort($items);
-         
+         // switch (#sortOptions){
+         	//  case 'Z':
+         	//  rsort($items);
+         	// break;
+         	//  }
         	} 
          
          elseif($sortOptions == 'O') {
           	ksort($items);
+          // switch (#sortOptions){
+         	//  case '0':
+         	//  ksort($items);
+         	// break;
+         	//  }
          
         	} 
 
          elseif($sortOptions == 'R') {
          	krsort($items);
+         	// switch (#sortOptions){
+         	//  case 'R':
+         	//  krsort($items);
+         	// break;
+         	//  }
          
         	} 
         	return $items;
@@ -53,7 +73,12 @@ function sort_menu($items){
  function get_input($upper = FALSE) {
 
 		$items = trim(fgets(STDIN));
-
+		// ternary operator most basic usage 
+			//$var = 5;
+            //$var_is_greater_than_two = ($var > 2 ? true : false); 
+            // returns true
+		
+			// return $upper ? strtoupper($items) : $items;
 		if ($upper) {
 			return strtoupper($items);
 		} else { 
