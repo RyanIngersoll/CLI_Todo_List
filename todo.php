@@ -34,6 +34,32 @@
 // available to 
 // "power users". Also add a L option that grabs and removes the last item in the list.
 
+//--------------------------------------------------------------------------------------
+
+// Add a file menu option to the main menu in your TODO list app. In this file menu
+//  create a (O)pen file option. The user should be able to enter the path to a file 
+//  to have it loaded. Example: User can enter 's' as the file path and name.
+
+// Create a function that reads the file from the user input and adds each line from 
+// the file to the current TODO list. Loading data/list.txt should properly load the list 
+// from above. Be sure to fclose() the file when you are done reading it.
+
+function openFileMenu($fileToOpen){
+
+    
+    $handle = fopen($fileToOpen, "r");
+    $contents = trim(fread($handle, filesize($fileToOpen)));
+    //echo $contents;
+    $contents_array = explode("\n", $contents); 
+    // convert list of strings into array
+    var_dump($contents_array);
+    return $contents_array;
+
+    fclose($handle);
+    
+
+}
+
 function menuOrder($items){
     echo 'do you want to add new item to the (B)eginning or the (E)nd of your list?';
 
@@ -123,7 +149,8 @@ function sort_menu($items){
      echo list_items($items);
 
      // Show the menu options
-     echo '(N)ew item, (R)emove item, (S)ort item, (Q)uit : ';
+     // Add a file menu option to the main menu in your TODO list app.
+     echo '(N)ew item, (R)emove item, (S)ort item, (O)pen file menu (Q)uit: ';
 
      // Get the input from user
      // Use trim() to remove whitespace and newlines
@@ -154,15 +181,23 @@ function sort_menu($items){
      	$items = sort_menu($items);
         
      }
-
+     elseif ($input == 'O') {
+        echo 'please type the name of the file: ';
+        $fileToOpen = get_input();
+        //openFileMenu($fileToOpen);
+        $items = array_merge(openFileMenu($fileToOpen), $items);
+     }
+     //hidden "power option"
      elseif ($input == 'F') {
         $deletedItems = array_shift($items);
         echo 'the deleted item = ' . $deletedItems . PHP_EOL;
      }
+     //hidden "power option"
       elseif ($input == 'L') {
         $deletedItems = array_pop($items);
         echo 'the deleted item = ' . $deletedItems . PHP_EOL;
      }
+
 
  // Exit when input is (Q)uit
  } while ($input != 'Q');
